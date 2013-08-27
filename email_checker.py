@@ -1,3 +1,6 @@
+import urllib2, base64
+import pickle
+
 def email_checker():
     '''
     Loads the atomfeed from gmail
@@ -5,9 +8,6 @@ def email_checker():
     If they are, output a 1 to the page (signaling the arduino to light up)
     If they are not, output a 0 to the page (signaling the arduino to turn its light off)
     '''
-
-    import urllib2, base64
-    import pickle
 
     #Get Credentials
     credentials_file = open('./password.txt','r')
@@ -22,7 +22,7 @@ def email_checker():
     req.add_header("Authorization", "Basic " + authstr)
     feed = urllib2.urlopen(req).read()
 
-    #Get Search terms from 'loved_ones.txt'
+    #Get Search terms from 'loved_ones.txt' (generally email address of your loved ones)
     loved_ones_file = open("loved_ones.txt", 'r')
     loved_ones_str = loved_ones_file.read()
     loved_ones = loved_ones_str.split("\n") #This array stores the list of search terms
@@ -34,9 +34,3 @@ def email_checker():
             return '1'
     #If no search_term is found, return 0
     return '0'
-
-
-def hello_world():
-    s = email_checker()
-    print s
-    return s
